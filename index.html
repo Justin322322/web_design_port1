@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brew Haven - Coffee Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2C1810;
+            --secondary: #A67B5B;
+            --accent: #D4A574;
+            --light: #F9F5F0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+        }
+
+        .navbar {
+            background-color: transparent;
+            transition: 0.3s;
+        }
+
+        .navbar.scrolled {
+            background-color: var(--primary);
+        }
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                        url('https://images.unsplash.com/photo-1447933601403-0c6688de566e?ixlib=rb-4.0.3');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: 15px;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .btn-custom {
+            background-color: var(--accent);
+            color: var(--primary);
+            padding: 12px 30px;
+            border-radius: 30px;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .btn-custom:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            margin-bottom: 2rem;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            text-align: center;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .feature-card i {
+            color: var(--accent);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-section {
+            background: var(--primary);
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('coffee-beans-bg.jpg');
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .newsletter-form {
+            position: relative;
+            z-index: 1;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            border-radius: 30px;
+            padding: 15px 20px;
+            border: none;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        #subscribe-status {
+            display: none;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        .status-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .status-error {
+            background: #dc3545;
+            color: white;
+        }
+
+        .cart-item {
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+        }
+
+        .badge.bg-accent {
+            background-color: var(--accent) !important;
+            color: var(--primary);
+        }
+
+        .quantity-controls {
+            display: inline-flex;
+            align-items: center;
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 2px;
+        }
+
+        .quantity-controls button {
+            width: 24px;
+            height: 24px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 14px;
+            line-height: 1;
+        }
+
+        .quantity-controls span {
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .btn-outline-secondary {
+            color: var(--primary);
+            border-color: var(--secondary);
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        @media (max-width: 576px) {
+            .offcanvas {
+                width: 100% !important;
+            }
+        }
+
+        /* Additional navbar styles */
+        @media (max-width: 991px) {
+            .navbar .nav-link .fa-shopping-cart {
+                font-size: 1.2rem;
+            }
+            
+            #cart-count-mobile {
+                position: absolute;
+                top: -5px;
+                right: -5px;
+                font-size: 0.7rem;
+            }
+            
+            .nav-link.text-white {
+                position: relative;
+                padding: 0.5rem;
+            }
+        }
+
+        /* Cart badge styles */
+        .badge.bg-accent {
+            position: relative;
+            top: -8px;
+            right: 5px;
+            font-size: 0.7rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Brew Haven</a>
+            <div class="d-flex align-items-center">
+                <!-- Cart icon for mobile -->
+                <a class="nav-link text-white me-2 d-lg-none" href="#" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count-mobile" class="badge bg-accent" style="display: none;">0</span>
+                </a>
+                <!-- Hamburger menu -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="menu.html">Menu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <!-- Cart icon for desktop -->
+                    <li class="nav-item d-none d-lg-block">
+                        <a class="nav-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span id="cart-count" class="badge bg-accent" style="display: none;">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Offcanvas -->
+    <div class="offcanvas offcanvas-end" id="cartOffcanvas" tabindex="-1">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Shopping Cart</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div id="cart-items"></div>
+            <div class="border-top pt-3 mt-3">
+                <p>Total: <span id="cart-total">$0.00</span></p>
+                <button class="btn btn-custom w-100" onclick="checkout()">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero d-flex align-items-center" id="home">
+        <div class="container text-center">
+            <h1 class="display-3 mb-4">Welcome to Brew Haven</h1>
+            <p class="lead mb-4">Experience the perfect blend of artisanal coffee and cozy atmosphere</p>
+            <a href="#menu" class="btn btn-custom btn-lg">Explore Menu</a>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="py-5" id="menu">
+        <div class="container">
+            <h2 class="section-title text-center">Our Signature Drinks</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="menu-item p-4 text-center">
+                        <img src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=500&q=80" 
+                             alt="Espresso" 
+                             class="mb-3 rounded-circle"
+                             style="width: 150px; height: 150px; object-fit: cover;">
+                        <h3>Espresso</h3>
+                        <p>Rich and bold single-origin espresso</p>
+                        <p class="text-accent fw-bold">$3.50</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="menu-item p-4 text-center">
+                        <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=500&q=80" 
+                             alt="Caramel Latte" 
+                             class="mb-3 rounded-circle"
+                             style="width: 150px; height: 150px; object-fit: cover;">
+                        <h3>Caramel Latte</h3>
+                        <p>Smooth espresso with caramel and steamed milk</p>
+                        <p class="text-accent fw-bold">$4.50</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="menu-item p-4 text-center">
+                        <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=500&q=80" 
+                             alt="Cappuccino" 
+                             class="mb-3 rounded-circle"
+                             style="width: 150px; height: 150px; object-fit: cover;">
+                        <h3>Cappuccino</h3>
+                        <p>Classic Italian style cappuccino</p>
+                        <p class="text-accent fw-bold">$4.00</p>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5">
+                <a href="menu.html" class="btn btn-custom btn-lg">View Full Menu</a>
+                <p class="mt-2 text-muted">Discover our complete selection of drinks, pastries, and pasta</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center">Why Choose Us</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <i class="fas fa-coffee"></i>
+                        <h3>Quality Coffee</h3>
+                        <p>Sourced from the finest coffee regions</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <i class="fas fa-heart"></i>
+                        <h3>Made with Love</h3>
+                        <p>Crafted by passionate baristas</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <i class="fas fa-home"></i>
+                        <h3>Cozy Space</h3>
+                        <p>Perfect environment to relax</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-5" id="contact">
+        <div class="container">
+            <h2 class="section-title text-center">Visit Us</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <p class="mb-4">123 Coffee Street, Brewville, BC 12345</p>
+                    <p class="mb-4">Open Monday - Sunday: 7AM - 8PM</p>
+                    <p class="mb-4">Phone: (123) 456-7890</p>
+                    <div class="social-links">
+                        <a href="#" class="me-3"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h2 class="mb-4">Subscribe for Coffee Updates</h2>
+                    <p class="mb-4">Get the latest news about our new coffee blends and special offers!</p>
+                    <form id="newsletter-form" class="newsletter-form">
+                        <div class="mb-3">
+                            <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email address" required>
+                        </div>
+                        <button type="submit" class="btn btn-custom">Subscribe Now</button>
+                        <div id="subscribe-status"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container text-center">
+            <p>&copy; 2024 Brew Haven. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/cart.js"></script>
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                document.querySelector('.navbar').classList.add('scrolled');
+            } else {
+                document.querySelector('.navbar').classList.remove('scrolled');
+            }
+        });
+
+        document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const statusDiv = document.getElementById('subscribe-status');
+
+            fetch('subscribe.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'email=' + encodeURIComponent(email)
+            })
+            .then(response => response.json())
+            .then(data => {
+                statusDiv.style.display = 'block';
+                if (data.success) {
+                    statusDiv.className = 'status-success';
+                    statusDiv.textContent = 'Thank you for subscribing!';
+                    document.getElementById('email').value = '';
+                } else {
+                    statusDiv.className = 'status-error';
+                    statusDiv.textContent = data.message || 'An error occurred. Please try again.';
+                }
+            })
+            .catch(error => {
+                statusDiv.style.display = 'block';
+                statusDiv.className = 'status-error';
+                statusDiv.textContent = 'An error occurred. Please try again.';
+            });
+        });
+    </script>
+</body>
+</html>
