@@ -318,30 +318,136 @@
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="py-5 bg-light">
+    <!-- Loyalty Program Section -->
+    <section class="py-5" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200'); background-size: cover; background-position: center; color: white;">
         <div class="container">
-            <h2 class="section-title text-center">Why Choose Us</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center mb-5">
+                    <h2 class="display-4 mb-4">Brew Haven Rewards</h2>
+                    <p class="lead">Join our loyalty program and earn rewards with every purchase!</p>
+                </div>
+            </div>
             <div class="row g-4">
                 <div class="col-md-4">
-                    <div class="feature-card">
-                        <i class="fas fa-coffee"></i>
-                        <h3>Quality Coffee</h3>
-                        <p>Sourced from the finest coffee regions</p>
+                    <div class="reward-card text-center p-4" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 15px; height: 100%;">
+                        <div class="reward-icon mb-4">
+                            <i class="fas fa-star fa-3x" style="color: var(--accent);"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Earn Points</h3>
+                        <p class="mb-0">Get 1 point for every $1 spent</p>
+                        <div class="reward-detail mt-3">
+                            <small>Points never expire for active members</small>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="feature-card">
-                        <i class="fas fa-heart"></i>
-                        <h3>Made with Love</h3>
-                        <p>Crafted by passionate baristas</p>
+                    <div class="reward-card text-center p-4" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 15px; height: 100%;">
+                        <div class="reward-icon mb-4">
+                            <i class="fas fa-gift fa-3x" style="color: var(--accent);"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Get Rewards</h3>
+                        <p class="mb-0">Redeem points for free drinks and treats</p>
+                        <div class="reward-detail mt-3">
+                            <small>100 points = Free drink of choice</small>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="feature-card">
-                        <i class="fas fa-home"></i>
-                        <h3>Cozy Space</h3>
-                        <p>Perfect environment to relax</p>
+                    <div class="reward-card text-center p-4" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 15px; height: 100%;">
+                        <div class="reward-icon mb-4">
+                            <i class="fas fa-birthday-cake fa-3x" style="color: var(--accent);"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Birthday Special</h3>
+                        <p class="mb-0">Free drink on your birthday</p>
+                        <div class="reward-detail mt-3">
+                            <small>Plus double points all birthday week!</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5">
+                <button class="btn btn-lg btn-custom" onclick="joinLoyalty()">Join Now</button>
+                <p class="mt-3"><small>Already a member? <a href="#" class="text-white">Sign in</a></small></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catering Section -->
+    <section class="py-5" style="background-color: var(--light);">
+        <div class="container">
+            <h2 class="section-title text-center">Catering & Events</h2>
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h3>Make Your Event Special</h3>
+                    <p>From corporate meetings to wedding celebrations, we provide:</p>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check text-success me-2"></i>Custom coffee bars</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Professional barista service</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Pastry platters</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Equipment rental</li>
+                    </ul>
+                    <button class="btn btn-custom mt-3" onclick="openCateringForm()">Request Catering</button>
+                </div>
+                <div class="col-md-6">
+                    <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952" 
+                         alt="Catering Event" 
+                         class="img-fluid rounded shadow">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Testimonials -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center">What Our Customers Say</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="fas fa-quote-left fa-2x text-muted mb-3"></i>
+                            <p class="card-text">Best coffee shop in town! The atmosphere is perfect for both work and relaxation.</p>
+                            <div class="text-warning mb-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="text-muted">- Sarah Johnson</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="fas fa-quote-left fa-2x text-muted mb-3"></i>
+                            <p class="card-text">Their loyalty program is amazing! I love getting rewards for my daily coffee fix.</p>
+                            <div class="text-warning mb-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="text-muted">- Michael Chen</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="fas fa-quote-left fa-2x text-muted mb-3"></i>
+                            <p class="card-text">Used their catering service for our office event. Professional and delicious!</p>
+                            <div class="text-warning mb-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="text-muted">- Emily Rodriguez</p>
+                        </div>
                     </div>
                 </div>
             </div>
